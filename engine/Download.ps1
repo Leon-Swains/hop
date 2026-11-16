@@ -103,7 +103,7 @@ function Resolve-Download($Distro) {
             # Fedora's own list has beta releases too, whose version isn't a plain number.
             $best = @(Invoke-RestMethod -Uri 'https://fedoraproject.org/releases.json' -UseBasicParsing -TimeoutSec 60) |
                 ForEach-Object { $_ } |
-                Where-Object { $_.variant -eq 'Workstation' -and $_.arch -eq 'x86_64' -and $_.version -match '^\d+$' -and $_.link -like '*.iso' } |
+                Where-Object { $_.variant -eq 'KDE' -and $_.arch -eq 'x86_64' -and $_.version -match '^\d+$' -and $_.link -like '*.iso' } |
                 Sort-Object { [int]$_.version } -Descending | Select-Object -First 1
             if (-not $best) { throw 'Could not find Fedora Workstation in the list on fedoraproject.org.' }
             if ("$($best.sha256)" -notmatch '^[0-9a-fA-F]{64}$') { throw 'Could not find the checksum for the Fedora ISO.' }
